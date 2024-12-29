@@ -11,8 +11,9 @@ export interface User {
 }
 
 export const USER_ROLES = {
-  1: 'Admin',
+  1: 'SuperAdmin',
   2: 'Manager',
-  3: 'Operator',
-  4: 'User'
+  3: 'Logist',
+  4: 'Dispatcher',
+  5: 'ClientAdmin'
 } as const;

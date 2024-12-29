@@ -45,10 +45,37 @@ const AuthServerForm: React.FC<AuthServerFormProps> = ({ onSubmit, initialData }
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Registration Password</label>
+        <label className="block text-sm font-medium text-gray-700">Backend Password</label>
         <input
-          type="password"
-          {...register('registration_password', { required: 'Password is required' })}
+          type="text"
+          {...register('mini_backend_password', { required: 'Backend Password is required' })}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Mobile Registration Password</label>
+        <input
+          type="text"
+          {...register('registration_password', { required: 'Mobile Password is required' })}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">API URL</label>
+        <input
+          type="text"
+          {...register('api_call_url', { required: 'API URL is required' })}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">User URL</label>
+        <input
+          type="text"
+          {...register('user_url', { required: 'User URL is required' })}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         />
       </div>
@@ -62,5 +89,6 @@ const AuthServerForm: React.FC<AuthServerFormProps> = ({ onSubmit, initialData }
     </form>
   );
 };
+
 
 export default AuthServerForm;

@@ -1,21 +1,49 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Select from 'react-select';
+import { useQuery } from '@tanstack/react-query';
+import { getAuthServers } from '../../api/auth-servers';
 import type { User } from '../../types/user';
 import { USER_ROLES } from '../../types/user';
 
 interface UserFormProps {
   onSubmit: (data: Partial<User>) => void;
   initialData?: Partial<User>;
-  companyGuid: string;
 }
 
-const UserForm: React.FC<UserFormProps> = ({ onSubmit, initialData, companyGuid }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: { ...initialData, company_guid: companyGuid },
+const UserForm: React.FC<UserFormProps> = ({ onSubmit, initialData }) => {
+  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
+    defaultValues: initialData,
   });
+
+  const { data: authServers = [] } = useQuery({
+    queryKey: ['authServers'],
+    queryFn: getAuthServers,
+  });
+
+  const selectedServerId = watch('company_guid');
+
+  const serverOptions = authServers.map(server => ({
+    value: server.id,
+    label: server.name,
+  }));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Auth Server</label>
+        <Select
+          options={serverOptions}
+          value={serverOptions.find(option => option.value === selectedServerId)}
+          onChange={(option) => setValue('company_guid', option?.value || '')}
+          className="mt-1"
+          placeholder="Select Auth Server..."
+        />
+        {errors.company_guid && (
+          <p className="mt-1 text-sm text-red-600">{errors.company_guid.message}</p>
+        )}
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-700">Name</label>
         <input
@@ -75,7 +103,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, initialData, companyGuid 
         type="submit"
         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        Save
+        {initialData ? 'Update User' : 'Create User'}
       </button>
     </form>
   );

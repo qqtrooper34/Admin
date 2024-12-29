@@ -8,7 +8,11 @@ interface ImportFormProps {
   companyGuid: string;
 }
 
-const ImportForm: React.FC<ImportFormProps> = ({ onSubmit, initialData, companyGuid }) => {
+const ImportForm: React.FC<ImportFormProps> = ({
+  onSubmit,
+  initialData,
+  companyGuid,
+}) => {
   const { register, handleSubmit } = useForm({
     defaultValues: { ...initialData, company_guid: companyGuid },
   });
@@ -25,7 +29,9 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSubmit, initialData, companyG
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Comment</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Comment
+        </label>
         <textarea
           {...register('comment')}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -34,7 +40,9 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSubmit, initialData, companyG
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Configuration</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Configuration
+        </label>
         <textarea
           {...register('config')}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
